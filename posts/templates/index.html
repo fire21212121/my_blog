@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+Блог Дениса
+{% endblock title %}
+{% block content %}
+    <a href="{% url 'post' %}">Добавить запись</a>
+    <form method="GET" class="form-filter">
+        <label>Категория</label>
+        <select name="category_form">
+            <option value="0" {% if selected_category == 0 %}selected{% endif %}>Все</option>
+            {%for category in categories%}
+            <option value="{{category.id}}" {% if category.id == selected_category %}selected{% endif %}>{{category.name}}</option>
+            {%endfor%}
+        </select>
+        <label>Показывать</label>
+        <select name="date_sort_form">
+            <option value="old" {% if selected_data_sort == "old" %}selected{% endif %}>Сначала старые</option>
+            <option value="new" {% if selected_data_sort == "new" %}selected{% endif %}>Сначала новые</option>
+        </select>
+        <input type="submit" value="Применить">
+    </form>
+    {% if not posts %}
+    <p>Пока здесь ничего нет, но скоро будет интересно!</p>
+    {% endif %}
+    {% for post in posts %}
+    <div class="div-post">
+        <div class="div-content-post">
+            <h3>{{post.header}}</h3>
+            <p><i>Категория: </i><b>{{post.category}}</b></p>
+            <p>{{post.text}}</p>
+            <p><i>Создано: </i><b>{{post.datetime_created|date:'d.m.Y H:i'}}</b></p>
+            <p><i>Изменено: </i><b>{{post.datetime_updated|date:'d.m.Y H:i'}}</b></p>
+        </div>
+        {% if post.image %}
+        <img src="{{post.image.url}}"  class="img-post">
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endblock content %}

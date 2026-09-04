@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+</head>
+<body>
+    <img class="img-header" src="{% static 'img/header.jpg' %}">
+    <h1>Мой блог</h1>
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>
